@@ -23,7 +23,7 @@
     spike 2.8 RPS
 
 Запишите цель p95 истории и объём поездок за год.
-  history reading p95 50ms on 2M tips
+  history reading p95 ≤ 50 мс on 2M trips
   errors 0.1% 1/1000
 
 
@@ -49,13 +49,13 @@ Oбъем данных за год:
 
 Нарисуйте в Excalidraw схему с пассажиром, балансировщиком, двумя экземплярами приложения и базой данных. Сохраните исходник и картинку в _design/architecture_ и вставьте сюда картинку.
 
-  ![Схема приложения](design/architecture/hld.png)
+  ![Схема приложения](design/architecture/environment.excalidraw.svg)
 
 ## Компоненты
 
 Нарисуйте в Excalidraw путь запроса истории через HTTP-обработчик, модуль доступа к данным и PostgreSQL. Сохраните исходник и картинку туда же и вставьте сюда картинку.
 
-  ![Запрос](design/architecture/request.png)
+  ![Запрос](design/architecture/components.excalidraw.svg)
 
 ## Модель данных
 

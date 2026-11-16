@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 date: 2026-11-17
 ---
 
@@ -29,7 +29,7 @@ LIMIT 20
 - прочитано 43 782 страницы с диска и 10 443 из кэша;
 - время выполнения 847 мс.
 
-Базовый замер `reports/baseline.json` (профиль `load/profile.json`: order 1, read 170, history 5 RPS, 30 с):
+Базовый замер `reports/baseline.md` (числа в `reports/baseline.json`, профиль `load/profile.json`: order 1, read 170, history 5 RPS, 30 с):
 
 | метрика | значение | цель |
 | --- | --- | --- |
@@ -79,7 +79,7 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS trips_passenger_created_idx
 ## Подтверждение
 
 1. `EXPLAIN ANALYZE` того же запроса показывает `Index Scan using trips_passenger_created_idx` без узла `Sort` и время выполнения порядка единиц миллисекунд.
-2. `make load NAME=with-index` с тем же `load/profile.json` и теми же данными (2 000 031 поездка):
+2. `make load NAME=after-index` (отчёт `reports/after-index.md`) с тем же `load/profile.json` и теми же данными (2 000 031 поездка):
    - history p95 ≤ 50 мс;
    - ошибки ≤ 0,1 %;
    - `dropped_iterations` = 0;
@@ -87,3 +87,5 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS trips_passenger_created_idx
 3. После подтверждения статус меняется на `accepted`, а числа попадают в «Итог» `design.md`.
 
 Откатываем (`DROP INDEX CONCURRENTLY trips_passenger_created_idx`), если план не использует индекс, history p95 не опускается ниже 50 мс или запись заказов заметно замедляется.
+
+Результат: `reports/after-index.md`. History p95 8,0 мс против 85,9 мс в `reports/baseline.md`, ошибок и пропущенных итераций нет, план использует `trips_passenger_created_idx`. Условие про p95 заказов этим прогоном не проверено: k6 не делит время по сценариям order и read (см. «Вывод» в `reports/after-index.md`).
