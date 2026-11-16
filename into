@@ -1,0 +1,14 @@
+estimates
+  order trips per day: 200K
+  read RPS: 1 per 5 second during a trip 15 min
+  history: 60K per day
+
+5 trips
+20 status order info
+5 history request
+
+goal
+  history reading p95 50ms on 2M tips
+  errors 0.1% 1/1000
+
+
